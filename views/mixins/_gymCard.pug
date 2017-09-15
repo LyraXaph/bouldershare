@@ -1,0 +1,10 @@
+mixin gymCard(gym = {})
+    .gym
+        .gym__hero
+            .gym__actions
+                button soon
+            img(src=`/uploads/${gym.photo} || 'store.png'`)
+            h2.title
+                a(href=`/gym/${gym.slug}`) #{gym.name}
+        .gym__details
+            p= gym.description.split(' ').slice(0, 15).join(' ')
