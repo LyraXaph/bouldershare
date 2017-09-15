@@ -2,7 +2,9 @@ mixin gymCard(gym = {})
     .gym
         .gym__hero
             .gym__actions
-                button soon
+                .gym__action.gym__action--edit
+                    a(href=`gyms/${gym._id}/edit`)
+                        != h.icon('pencil')
             img(src=`/uploads/${gym.photo} || 'store.png'`)
             h2.title
                 a(href=`/gym/${gym.slug}`) #{gym.name}

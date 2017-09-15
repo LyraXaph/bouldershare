@@ -1,13 +1,14 @@
 mixin gymForm(gym = {})
-    form(action="/add" method="POST" class="card")
+    form(action=`/add/${gym._id || ''}` method="POST" class="card")
         label(for="name") Name
-        input(type="text" name="name") 
+        input(type="text" name="name" value=gym.name) 
         label(for="description") Description
-        textarea(type="text" name="description")
+        textarea(type="text" name="description")= gym.description
         - const choices = ['pro', 'noobfriendly', 'bodyfuildiers']
+        - const tags = gym.tags || []
         ul.tags
             each choice in choices
                 .tag.tag__choice 
-                    input(type="checkbox" id=choice value=choice name="tags")
+                    input(type="checkbox" id=choice value=choice name="tags" checked=(tags.includes(choice)))
                     label(for=choice) #{choice}
         input(type="submit", value="Save ->" class="button")

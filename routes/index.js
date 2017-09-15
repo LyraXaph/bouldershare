@@ -7,5 +7,8 @@ router.get('/', gymController.homePage);
 router.get('/gyms', catchErrors(gymController.getGyms));
 router.get('/add', gymController.addGym);
 router.post('/add', catchErrors(gymController.createGym));
+router.post('/add/:id', catchErrors(gymController.updateGym));
+router.get('/gyms/:id/edit', catchErrors(gymController.editGym));
 
 module.exports = router;
+
