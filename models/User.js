@@ -4,7 +4,7 @@ mongoose.Promise = global.Promise;
 const md5 = require('md5');
 const validator = require('validator');
 const mangodbErrorHandler = require('mongoose-mongodb-errors');
-const passportLocalMongoose = require('password-local-mongoose');
+const passportLocalMongoose = require('passport-local-mongoose');
 
 
 const userSchema = new Schema({
@@ -23,7 +23,7 @@ const userSchema = new Schema({
     }
 });
 
-userSchema.plugin(passportLocalMongoose, {usernameField: 'email'});
+userSchema.plugin(passportLocalMongoose, {usernameField: 'email'}); // exposes a method called register
 userSchema.plugin(mangodbErrorHandler);
 
 module.exports = mongoose.model('User', userSchema);
