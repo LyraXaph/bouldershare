@@ -13,10 +13,18 @@ router.post('/add/:id', catchErrors(gymController.updateGym));
 router.get('/gyms/:id/edit', catchErrors(gymController.editGym));
 
 router.get('/login', userController.loginForm);
+router.post('/login', authController.login);
 router.get('/register', userController.registerForm);
 router.post('/register', userController.validateRegister,
                          userController.register, 
                          authController.login);
+
+router.get('/logout', authController.logout);
+
+/*
+API endpoints
+*/
+router.get('/api/search', catchErrors(gymController.searchGyms));
 
 module.exports = router;
 

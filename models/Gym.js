@@ -16,6 +16,12 @@ const gymSchema = new mongoose.Schema({
     tags : [String]
 });
 
+//define indexes (index something as text)
+gymSchema.index({
+    name: 'text', 
+    description: 'text'
+})
+
 gymSchema.pre('save', function(next){
     if(!this.isModified('name')){
         next(); // skip it

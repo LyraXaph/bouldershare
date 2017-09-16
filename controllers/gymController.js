@@ -35,3 +35,22 @@ exports.updateGym = async (req, res) => {
     req.flash('success', `Successfully updated ${gym.name}`);
     res.redirect(`/gyms/${gym._id}/edit`);
 }
+
+exports.searchGyms = async (req,  res) => {
+    const gyms = await Gym.
+    // first find gyms that match
+    find({
+        $text: {
+            $search: req.query.q,
+        }
+    }, {
+        score: { $meta: 'textScore' }
+    })
+    // then sort them 
+    .sort({
+        score: { $meta: 'textScore' }
+    })
+    // limit to only 5 results
+    .limit(5);
+    res.json(gyms);
+}
