@@ -5,9 +5,9 @@ const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
 const { catchErrors } = require('../handlers/errorHandlers');
 
-router.get('/', gymController.homePage);
+router.get('/', gymController.getGyms);
 router.get('/gyms', catchErrors(gymController.getGyms));
-router.get('/add', gymController.addGym);
+router.get('/add', authController.isLoggedIn, gymController.addGym);
 router.post('/add',
     gymController.upload,
     catchErrors(gymController.resize), 
@@ -17,6 +17,8 @@ router.post('/add/:id',
     catchErrors(gymController.resize), 
     catchErrors(gymController.updateGym));
 router.get('/gyms/:id/edit', catchErrors(gymController.editGym));
+router.get('/gym/:slug', catchErrors(gymController.getGymBySlug));
+
 
 router.get('/login', userController.loginForm);
 router.post('/login', authController.login);
@@ -24,8 +26,10 @@ router.get('/register', userController.registerForm);
 router.post('/register', userController.validateRegister,
                          userController.register, 
                          authController.login);
-
 router.get('/logout', authController.logout);
+
+router.get('/account', authController.isLoggedIn, userController.account);
+router.post('/account', catchErrors(userController.updateAccount));
 
 /*
 API endpoints

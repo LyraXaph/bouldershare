@@ -23,12 +23,17 @@ gymSchema.index({
     description: 'text'
 })
 
-gymSchema.pre('save', function(next){
+gymSchema.pre('save', async function(next){
     if(!this.isModified('name')){
         next(); // skip it
         return; // stops this function from running
     }
     this.slug = slug(this.name);
+    const slugRegEx = new RegExp(`^(${this.slug})((-[0-9]*$)?)$`, 'i');
+    const gymsWithSlug = await this.constructor.find({ slug: slugRegEx});
+    if (gymsWithSlug.length){
+        this.slug = `${this.slug}-${gymsWithSlug.length + 1}`;
+    }
     next();
 })
 

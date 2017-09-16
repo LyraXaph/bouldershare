@@ -53,16 +53,24 @@ exports.getGyms = async (req, res) => {
     res.render('gyms', {title: "gyms", gyms});
 };
 
+exports.getGymBySlug = async (req, res, next) => {
+    const gym = await Gym.findOne({slug : req.params.slug});
+    if (!gym) return next();
+    res.render('gym', {title: gym.name, gym});
+}
+
 exports.editGym = async (req, res) => {
     const gym = await Gym.findOne({_id : req.params.id});
     res.render('editGym', {title: `Edit ${gym.name}`, gym});
 }
 
 exports.updateGym = async (req, res) => {
-    const gym = await Gym.findOneAndUpdate({_id: req.params.id}, req.body, {
-        new: true, // return the updated gym instead of the old one
-        runValidators: true
-    }).exec();
+    const gym = await Gym.findOneAndUpdate(
+        {_id: req.params.id},
+        req.body,
+        {new: true, // return the updated gym instead of the old one
+        runValidators: true}
+    ).exec();
     req.flash('success', `Successfully updated ${gym.name}`);
     res.redirect(`/gyms/${gym._id}/edit`);
 }
