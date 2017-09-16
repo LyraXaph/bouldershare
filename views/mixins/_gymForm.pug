@@ -1,9 +1,13 @@
 mixin gymForm(gym = {})
-    form(action=`/add/${gym._id || ''}` method="POST" class="card")
+    form(action=`/add/${gym._id || ''}` method="POST" class="card" enctype="multipart/form-data")
         label(for="name") Name
         input(type="text" name="name" value=gym.name) 
         label(for="description") Description
         textarea(type="text" name="description")= gym.description
+        label(for="photo") Photo
+        input(type="file" name="photo" id="photo" accept="image/gif, image/png, image/jpeg")
+        if gym.photo
+            img(src=`/uploads/${gym.photo}` alt=gym.name width="200")
         - const choices = ['pro', 'noobfriendly', 'bodyfuildiers']
         - const tags = gym.tags || []
         ul.tags

@@ -5,8 +5,12 @@ mixin gymCard(gym = {})
                 .gym__action.gym__action--edit
                     a(href=`gyms/${gym._id}/edit`)
                         != h.icon('pencil')
-            img(src=`/uploads/${gym.photo} || 'store.png'`)
+            img(src=`/uploads/${gym.photo || 'store.png'}`)
             h2.title
                 a(href=`/gym/${gym.slug}`) #{gym.name}
         .gym__details
             p= gym.description.split(' ').slice(0, 15).join(' ')
+
+
+
+

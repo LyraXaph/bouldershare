@@ -8,8 +8,14 @@ const { catchErrors } = require('../handlers/errorHandlers');
 router.get('/', gymController.homePage);
 router.get('/gyms', catchErrors(gymController.getGyms));
 router.get('/add', gymController.addGym);
-router.post('/add', catchErrors(gymController.createGym));
-router.post('/add/:id', catchErrors(gymController.updateGym));
+router.post('/add',
+    gymController.upload,
+    catchErrors(gymController.resize), 
+    catchErrors(gymController.createGym));
+router.post('/add/:id', 
+    gymController.upload,
+    catchErrors(gymController.resize), 
+    catchErrors(gymController.updateGym));
 router.get('/gyms/:id/edit', catchErrors(gymController.editGym));
 
 router.get('/login', userController.loginForm);
