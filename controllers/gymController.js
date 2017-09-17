@@ -65,6 +65,8 @@ exports.editGym = async (req, res) => {
 }
 
 exports.updateGym = async (req, res) => {
+    // set the location data to be a point
+    req.body.location.type = 'Point';
     const gym = await Gym.findOneAndUpdate(
         {_id: req.params.id},
         req.body,

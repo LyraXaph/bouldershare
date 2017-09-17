@@ -4,3 +4,5 @@ Questions
 
 Tasks
 1. Password reset flow
+2. custom mongodb aggregation
+3. google api key
