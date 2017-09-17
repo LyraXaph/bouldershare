@@ -2,9 +2,16 @@ mixin gymCard(gym = {})
     .gym
         .gym__hero
             .gym__actions
-                .gym__action.gym__action--edit
-                    a(href=`gyms/${gym._id}/edit`)
-                        != h.icon('pencil')
+                if user
+                    .gym__action.gym__action--heart
+                        form.heart(method="POST" action=`/api/gyms/${gym._id}/heart`)
+                            - const heartStrings = user.hearts.map(obj => obj.toString())
+                            - const heartClass = heartStrings.includes(gym._id.toString()) ? 'heart__button--hearted' : ''
+                            button.heart__button(type="submit" name="heart" class=heartClass)
+                                != h.icon('heart')
+                    .gym__action.gym__action--edit
+                        a(href=`gyms/${gym._id}/edit`)
+                            != h.icon('pencil')
             img(src=`/uploads/${gym.photo || 'store.png'}`)
             h2.title
                 a(href=`/gym/${gym.slug}`) #{gym.name}

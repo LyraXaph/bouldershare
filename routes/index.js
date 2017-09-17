@@ -7,6 +7,7 @@ const { catchErrors } = require('../handlers/errorHandlers');
 
 router.get('/', gymController.getGyms);
 router.get('/gyms', catchErrors(gymController.getGyms));
+router.get('/hearts', authController.isLoggedIn, catchErrors(gymController.getHeartedGyms));
 router.get('/add', authController.isLoggedIn, gymController.addGym);
 router.post('/add',
     gymController.upload,
@@ -36,6 +37,8 @@ router.post('/account/forgot', catchErrors(authController.forgot))
 API endpoints
 */
 router.get('/api/search', catchErrors(gymController.searchGyms));
+
+router.post('/api/gyms/:id/heart', catchErrors(gymController.heartGym));
 
 module.exports = router;
 

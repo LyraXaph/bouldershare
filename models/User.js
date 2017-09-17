@@ -22,7 +22,11 @@ const userSchema = new Schema({
         trim: true
     }, 
     resetPasswordToken: String, 
-    resetPasswordExpired: Date
+    resetPasswordExpired: Date, 
+    // hearts is an array of ids related to the gym 
+    hearts: [
+        { type: mongoose.Schema.ObjectId, ref: 'Gym'}
+    ]
 });
 
 userSchema.virtual('gravatar').get(function() {

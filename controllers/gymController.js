@@ -1,8 +1,10 @@
 const mongoose = require('mongoose');
 const Gym = mongoose.model('Gym');
+const User = mongoose.model('User');
 const multer = require('multer');
 const jimp = require('jimp');
 const uuid = require('uuid');
+
 
 const multerOptions = {
     storage: multer.memoryStorage(),
@@ -59,6 +61,11 @@ exports.getGymBySlug = async (req, res, next) => {
     res.render('gym', {title: gym.name, gym});
 }
 
+exports.getHeartedGyms = async (req, res, next) => {
+    const gyms = await Gym.find( {_id : { $in : req.user.hearts } });
+    res.render('gyms', {title: 'Hearted Gyms', gyms});
+}
+
 exports.editGym = async (req, res) => {
     const gym = await Gym.findOne({_id : req.params.id});
     res.render('editGym', {title: `Edit ${gym.name}`, gym});
@@ -94,4 +101,15 @@ exports.searchGyms = async (req,  res) => {
     // limit to only 5 results
     .limit(5);
     res.json(gyms);
+}
+
+exports.heartGym = async (req, res) => {
+    const hearts = req.user.hearts.map(obj => obj.toString());
+    const operator = hearts.includes(req.params.id) ? '$pull' : '$addToSet';
+    const user = await User.
+    findByIdAndUpdate(req.user.id, 
+        { [operator]: {hearts: req.params.id}},
+        { new: true }
+    ); 
+    res.json(user);
 }
