@@ -4,6 +4,14 @@ mixin gymForm(gym = {})
         input(type="text" name="name" value=gym.name) 
         label(for="description") Description
         textarea(type="text" name="description")= gym.description
+        //- address, long and lat
+        label(for="address") Address
+        //- // this first checks if there is a location object and then assignes it the address property
+        input(type="text", id="address" name="location[address]" value=(gym.location && gym.location.address)) 
+        label(for="lng") Address Lng
+        input(type="text" id="lng" name="location[coordinates][0]" value=(gym.location && gym.location.coordinates[0]) required) 
+        label(for="lat") Address Lat
+        input(type="text" id="lat" name="location[coordinates][1]" value=(gym.location && gym.location.coordinates[1]) required)
         label(for="photo") Photo
         input(type="file" name="photo" id="photo" accept="image/gif, image/png, image/jpeg")
         if gym.photo

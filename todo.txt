@@ -1,1 +1,6 @@
+Questions
 1. Gym owner vs gym goer as user type?
+
+
+Tasks
+1. Password reset flow
