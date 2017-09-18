@@ -1,6 +1,7 @@
 extends layout
 
 include mixins/_reviewForm
+include mixins/_review
 
 block content
     .single
@@ -21,3 +22,9 @@ block content
         
         if user
             +reviewForm(gym)
+
+        if gym.reviews
+            .reviews
+                each r in gym.reviews
+                    .review
+                        +review(r)

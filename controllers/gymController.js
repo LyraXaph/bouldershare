@@ -53,12 +53,12 @@ exports.createGym = async (req, res) => {
 exports.getGyms = async (req, res) => {
     //1. query the database for the list of all stores
     const gyms = await Gym.find();
-    res.render('gyms', {title: "gyms", gyms});
+    res.render('gyms', {title: "Gyms", gyms});
 };
 
 exports.getGymBySlug = async (req, res, next) => {
     // populate the object from the object id (author)
-    const gym = await Gym.findOne({slug : req.params.slug}).populate('author');
+    const gym = await Gym.findOne({slug : req.params.slug}).populate('author reviews');
     if (!gym) return next();
     res.render('gym', {title: gym.name, gym});
 }

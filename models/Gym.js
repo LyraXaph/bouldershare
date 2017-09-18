@@ -60,11 +60,11 @@ gymSchema.pre('save', async function(next){
     next();
 })
 
-/* // find reviews where the stores.id property === reviews gym property
+ // find reviews where the stores.id property === reviews gym property
 gymSchema.virtual('reviews', {
     ref: 'Review', 
-    localField: id, // which field on the gym model
-    foreignFiels: 'gym' // which field on the review model 
+    localField: '_id', // which field on the gym model
+    foreignField: 'gym' // which field on the review model 
 });
- */
+ 
 module.exports = mongoose.model('Gym', gymSchema);
