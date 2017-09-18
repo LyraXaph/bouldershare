@@ -44,6 +44,7 @@ exports.addGym = (req, res) => {
 };
 
 exports.createGym = async (req, res) => {
+    req.body.author = req.user._id;
     const gym = await (new Gym(req.body)).save();
     req.flash('success', `Successfully Created ${gym.name}. Care to leave a review?`);
     res.redirect(`/gym/${gym.slug}`);
@@ -56,7 +57,8 @@ exports.getGyms = async (req, res) => {
 };
 
 exports.getGymBySlug = async (req, res, next) => {
-    const gym = await Gym.findOne({slug : req.params.slug});
+    // populate the object from the object id (author)
+    const gym = await Gym.findOne({slug : req.params.slug}).populate('author');
     if (!gym) return next();
     res.render('gym', {title: gym.name, gym});
 }
@@ -66,8 +68,17 @@ exports.getHeartedGyms = async (req, res, next) => {
     res.render('gyms', {title: 'Hearted Gyms', gyms});
 }
 
+const confirmOwner = (gym, user) => {
+    if(!gym.author.equals(user.id)){
+        console.log(`Author ${gym.author.name}`);
+        console.log(`user ${user.name}`)
+        throw Error('You must own a gym in order to edit it');
+    }
+}
+
 exports.editGym = async (req, res) => {
     const gym = await Gym.findOne({_id : req.params.id});
+    confirmOwner(gym, req.user);
     res.render('editGym', {title: `Edit ${gym.name}`, gym});
 }
 

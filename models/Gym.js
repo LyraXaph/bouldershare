@@ -32,7 +32,12 @@ const gymSchema = new mongoose.Schema({
             required: 'You must supply an address'
         }
     },
-    photo: String
+    photo: String, 
+    author: {
+        type: mongoose.Schema.ObjectId, 
+        ref: 'User', 
+        required: 'You must supply an author'
+    }
 });
 
 //define indexes (index something as text)
@@ -55,4 +60,11 @@ gymSchema.pre('save', async function(next){
     next();
 })
 
+/* // find reviews where the stores.id property === reviews gym property
+gymSchema.virtual('reviews', {
+    ref: 'Review', 
+    localField: id, // which field on the gym model
+    foreignFiels: 'gym' // which field on the review model 
+});
+ */
 module.exports = mongoose.model('Gym', gymSchema);
