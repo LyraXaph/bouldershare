@@ -1,0 +1,23 @@
+extends layout
+
+include mixins/_reviewForm
+include mixins/_review
+
+block content
+    .single
+        .single__hero
+            img.single__image(src=`/uploads/${problem.photo || problem.png}`)
+            h2.title.title--single
+                a(href=`/problem/${problem.slug}`)= problem.name
+    
+    .single__details.inner
+        p=problem.description
+        
+        if user
+            +reviewForm(problem)
+
+        if problem.reviews
+            .reviews
+                each r in problem.reviews
+                    .review
+                        +review(r)

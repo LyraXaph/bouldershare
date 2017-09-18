@@ -24,6 +24,7 @@ exports.menu = [
   { slug: '/gyms', title: 'Gyms', icon: 'store', },
   { slug: '/tags', title: 'Tags', icon: 'tag', },
   { slug: '/top', title: 'Top', icon: 'top', },
-  { slug: '/add', title: 'Add', icon: 'add', },
+  { slug: '/add', title: 'Gym', icon: 'add', },
+  { slug: '/problemAdd', title: 'Problem', icon: 'problem', },
   { slug: '/map', title: 'Map', icon: 'map', },
 ];

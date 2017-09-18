@@ -1,0 +1,24 @@
+mixin problemCard(problem = {})
+    .problem
+        .problem__hero
+            .problem__actions
+                if user
+                    .problem__action.problem__action--heart
+                        form.heart(method="POST" action=`/api/problems/${problem._id}/heart`)
+                            - const heartStrings = user.hearts.map(obj => obj.toString())
+                            - const heartClass = heartStrings.includes(problem._id.toString()) ? 'heart__button--hearted' : ''
+                            button.heart__button(type="submit" name="heart" class=heartClass)
+                                != h.icon('heart')
+                if user && problem.author.equals(user._id)
+                    .problem__action.problem__action--edit
+                        a(href=`problems/${problem._id}/edit`)
+                            != h.icon('pencil')
+            img(src=`/uploads/${problem.photo || 'store.png'}`)
+            h2.title
+                a(href=`/problem/${problem.slug}`) #{problem.name}
+        .problem__details
+            p= problem.description.split(' ').slice(0, 15).join(' ')
+
+
+
+

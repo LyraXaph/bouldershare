@@ -1,0 +1,15 @@
+mixin problemForm(problem = {})
+    form(action=`/problemAdd/${problem._id || ''}` method="POST" class="card" enctype="multipart/form-data")
+        label(for="gyms") Gym
+        select(name="gym")
+            each gym in gyms
+                option(value=gym.id) #{gym.name}
+        label(for="name") Name
+        input(type="text" name="name" value=problem.name) 
+        label(for="description") Description
+        textarea(type="text" name="description")= problem.description
+        label(for="photo") Photo
+        input(type="file" name="photo" id="photo" accept="image/gif, image/png, image/jpeg")
+        if problem.photo
+            img(src=`/uploads/${problem.photo}` alt=problem.name width="200")
+        input(type="submit", value="Save →" class="button")

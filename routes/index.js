@@ -4,6 +4,7 @@ const gymController = require('../controllers/gymController');
 const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
 const reviewController = require('../controllers/reviewController');
+const problemController = require('../controllers/problemController');
 const { catchErrors } = require('../handlers/errorHandlers');
 
 router.get('/', gymController.getGyms);
@@ -20,6 +21,17 @@ router.post('/add/:id',
     catchErrors(gymController.updateGym));
 router.get('/gyms/:id/edit', catchErrors(gymController.editGym));
 router.get('/gym/:slug', catchErrors(gymController.getGymBySlug));
+
+router.get('/problemAdd', authController.isLoggedIn, catchErrors(problemController.addProblem));
+router.post('/problemAdd',
+    problemController.upload,
+    catchErrors(problemController.resize), 
+    catchErrors(problemController.createProblem));
+router.post('/problemAdd/:id', 
+    gymController.upload,
+    catchErrors(problemController.resize), 
+    catchErrors(problemController.updatProblem));
+router.get('/problem/:slug', catchErrors(problemController.getProblemBySlug));
 
 
 router.get('/login', userController.loginForm);

@@ -1,0 +1,11 @@
+extend layout
+
+include mixins/_problemCard
+
+block content
+    .inner
+        h2= title
+        .problems
+            each problem in problems
+                +problemCard(problem)
+
