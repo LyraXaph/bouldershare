@@ -3,6 +3,7 @@ const router = express.Router();
 const gymController = require('../controllers/gymController');
 const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
+const reviewController = require('../controllers/reviewController');
 const { catchErrors } = require('../handlers/errorHandlers');
 
 router.get('/', gymController.getGyms);
@@ -33,6 +34,7 @@ router.get('/account', authController.isLoggedIn, userController.account);
 router.post('/account', catchErrors(userController.updateAccount));
 
 router.post('/account/forgot', catchErrors(authController.forgot))
+router.post('/reviews/:id', authController.isLoggedIn, catchErrors(reviewController.addReview));
 /*
 API endpoints
 */
