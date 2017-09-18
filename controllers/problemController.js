@@ -50,12 +50,11 @@ exports.createProblem = async (req, res) => {
 
 exports.getProblems = async (req, res) => {
     //1. query the database for the list of all stores
-    const Problems = await Problem.find();
-    res.render('problems', {title: "Problems", Problems});
+    const problems = await Problem.find();
+    res.render('problems', {title: "Problems", problems});
 };
 
 exports.getProblemBySlug = async (req, res, next) => {
-    console.log('found something');
     // populate the object from the object id (author)
     const problem = await Problem.findOne({slug : req.params.slug}).populate('author reviews');
     if (!Problem) return next();

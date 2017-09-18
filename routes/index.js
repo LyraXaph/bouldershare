@@ -32,7 +32,7 @@ router.post('/problemAdd/:id',
     catchErrors(problemController.resize), 
     catchErrors(problemController.updatProblem));
 router.get('/problem/:slug', catchErrors(problemController.getProblemBySlug));
-
+router.get('/problems', catchErrors(problemController.getProblems));
 
 router.get('/login', userController.loginForm);
 router.post('/login', authController.login);

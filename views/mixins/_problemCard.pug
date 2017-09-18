@@ -1,7 +1,7 @@
 mixin problemCard(problem = {})
-    .problem
-        .problem__hero
-            .problem__actions
+    .gym
+        .gym__hero
+            .gym__actions
                 if user
                     .problem__action.problem__action--heart
                         form.heart(method="POST" action=`/api/problems/${problem._id}/heart`)
@@ -13,7 +13,7 @@ mixin problemCard(problem = {})
                     .problem__action.problem__action--edit
                         a(href=`problems/${problem._id}/edit`)
                             != h.icon('pencil')
-            img(src=`/uploads/${problem.photo || 'store.png'}`)
+            img(src=`/uploads/${problem.photo || 'problem.png'}`)
             h2.title
                 a(href=`/problem/${problem.slug}`) #{problem.name}
         .problem__details

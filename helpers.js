@@ -22,6 +22,7 @@ exports.siteName = `Bouldershare`;
 
 exports.menu = [
   { slug: '/gyms', title: 'Gyms', icon: 'store', },
+  { slug: '/problems', title: 'Problems', icon: 'boulder', },
   { slug: '/tags', title: 'Tags', icon: 'tag', },
   { slug: '/top', title: 'Top', icon: 'top', },
   { slug: '/add', title: 'Gym', icon: 'add', },
