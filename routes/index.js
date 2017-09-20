@@ -47,6 +47,8 @@ router.post('/account', catchErrors(userController.updateAccount));
 
 router.post('/account/forgot', catchErrors(authController.forgot))
 router.post('/reviews/:id', authController.isLoggedIn, catchErrors(reviewController.addReview));
+
+router.get('/top', gymController.getTopGyms);
 /*
 API endpoints
 */

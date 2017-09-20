@@ -124,3 +124,8 @@ exports.heartGym = async (req, res) => {
     ); 
     res.json(user);
 }
+
+exports.getTopGyms = async (req, res) => {
+    const gyms = await Gym.getTopGyms();
+    res.render('topGyms', {gyms, title: 'Top Gyms!'});
+}

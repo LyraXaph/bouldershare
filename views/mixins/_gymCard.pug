@@ -13,7 +13,11 @@ mixin gymCard(gym = {})
                     .gym__action.gym__action--edit
                         a(href=`gyms/${gym._id}/edit`)
                             != h.icon('pencil')
-            img(src=`/uploads/${gym.photo || 'store.png'}`)
+                if gym.reviews
+                    .gym__action.gym__action--count
+                        != h.icon('review')
+                        span= gym.reviews.length
+            img(src=`/uploads/${gym.photo || 'gym.png'}`)
             h2.title
                 a(href=`/gym/${gym.slug}`) #{gym.name}
         .gym__details
