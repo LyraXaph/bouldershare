@@ -6,7 +6,6 @@ const validator = require('validator');
 const mangodbErrorHandler = require('mongoose-mongodb-errors');
 const passportLocalMongoose = require('passport-local-mongoose');
 
-
 const userSchema = new Schema({
     email: {
         type: String, 
@@ -22,7 +21,7 @@ const userSchema = new Schema({
         trim: true
     }, 
     resetPasswordToken: String, 
-    resetPasswordExpired: Date, 
+    resetPasswordExpires: Date, 
     // hearts is an array of ids related to the gym 
     hearts: [
         { type: mongoose.Schema.ObjectId, ref: 'Gym'}
