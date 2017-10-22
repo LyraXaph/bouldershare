@@ -53,12 +53,15 @@ router.post('/account/reset/:token',
 router.post('/reviews/:id', authController.isLoggedIn, catchErrors(reviewController.addReview));
 
 router.get('/top', gymController.getTopGyms);
+
+router.get('/map', gymController.mapPage);
+
 /*
 API endpoints
 */
 router.get('/api/search', catchErrors(gymController.searchGyms));
 
 router.post('/api/gyms/:id/heart', catchErrors(gymController.heartGym));
-
+router.get('/api/gyms/near', catchErrors(gymController.mapGyms));
 module.exports = router;
 

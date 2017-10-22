@@ -1,11 +1,11 @@
 mixin problemForm(problem = {})
     form(action=`/problemAdd/${problem._id || ''}` method="POST" class="card" enctype="multipart/form-data")
         label(for="gyms") Gym
-        select(name="gym")
-            each gym in gyms
-                option(value=gym.id) #{gym.name}
+        .search__gyms
+            input.gyms__search__input(type="text" name="gyms__search" autocomplete="off")
+            .gyms__search__results
         label(for="name") Name
-        input(type="text" name="name" value=problem.name) 
+        input(type="text" name="name" value=problem.name id="name") 
         label(for="description") Description
         textarea(type="text" name="description")= problem.description
         label(for="photo") Photo
