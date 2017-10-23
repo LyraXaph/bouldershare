@@ -11,6 +11,8 @@ block content
                 a(href=`/gym/${gym.slug}`)= gym.name
     
     .single__details.inner
+        img.single__map(src=h.staticMap(gym.location.coordinates))
+        p.single__location= gym.location.address
         p=gym.description
 
         if gym.tags
