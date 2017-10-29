@@ -98,11 +98,11 @@ exports.updateGym = async (req, res) => {
 }
 
 exports.searchGyms = async (req, res) => {
-    console.log(`Finding gyms starting with `, req.query.q );
+    let regex = new RegExp('.*' + req.query.q + '.*', 'gi');
     const gyms = await Gym.
         // first find gyms that match
         find({
-            $text: {$regex: '.*g.*'}
+          "name": regex
         }, {
             score: { $meta: 'textScore' }
         })
@@ -131,25 +131,25 @@ exports.getTopGyms = async (req, res) => {
     res.render('topGyms', { gyms, title: 'Top Gyms!' });
 }
 
-exports.mapGyms = async (req, res ) => {
+exports.mapGyms = async (req, res) => {
     const coordinates = [req.query.lng, req.query.lat].map(parseFloat);
     const q = {
         location: {
             $near: {
                 $geometry: {
-                    type: 'Point', 
+                    type: 'Point',
                     coordinates
-                }, 
+                },
                 $maxDistance: 10000 // 10 km
             }
         }
     };
 
     const gyms = await Gym.find(q).select('slug name description location photo')
-    .limit(10);
+        .limit(10);
     res.json(gyms);
 }
 
 exports.mapPage = (req, res) => {
-    res.render('map', {title: 'Map '});
+    res.render('map', { title: 'Map ' });
 }
