@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 const slug = require('slugs');
+const searchPlugin = require('mongoose-search-plugin');
 
 const gymSchema = new mongoose.Schema({
     name: {
@@ -101,7 +102,6 @@ function autopopulate(next) {
 gymSchema.pre('find', autopopulate);
 gymSchema.pre('findOne', autopopulate);
 
-
 // find reviews where the gyms.id property === reviews gym property
 gymSchema.virtual('reviews', {
     ref: 'Review',
@@ -110,3 +110,5 @@ gymSchema.virtual('reviews', {
 });
 
 module.exports = mongoose.model('Gym', gymSchema);
+
+

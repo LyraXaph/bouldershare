@@ -14,6 +14,7 @@ const problemSchema = new Schema({
     }, 
     grade: {
         type: String, // ??
+        required: "Please enter a grade."
     },
     created: {
         type: Date, 

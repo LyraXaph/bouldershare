@@ -18,6 +18,7 @@ mixin problemCard(problem = {})
                 a(href=`/problem/${problem.slug}`) #{problem.name}
         .problem__details
             p= problem.description.split(' ').slice(0, 15).join(' ')
+            p Grade: #{problem.grade}
 
 
 

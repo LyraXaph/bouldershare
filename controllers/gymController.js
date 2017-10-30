@@ -102,7 +102,7 @@ exports.searchGyms = async (req, res) => {
     const gyms = await Gym.
         // first find gyms that match
         find({
-          "name": regex
+          "name": regex 
         }, {
             score: { $meta: 'textScore' }
         })

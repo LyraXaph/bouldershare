@@ -1961,8 +1961,8 @@ function typeAhead(search) {
             searchResults.style.display = 'none';
             return;
         }
-        searchResults.style.display = 'block';
 
+        searchResults.style.display = 'block';
         _axios2.default.get('/api/search?q=' + this.value).then(function (res) {
             if (res.data.length) {
                 var html = searchResultsHTML(res.data);
@@ -2027,16 +2027,17 @@ var _dompurify2 = _interopRequireDefault(_dompurify);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function searchResultsHTML(gyms) {
-    return gyms.map(function (gym) {
-        return '<div class="search__result">' + gym.name + '</div>';
-    }).join('');
+    return '<datalist>' + gyms.map(function (gym) {
+        return '\n            <option value=' + gym.name + '>\n        ';
+    }).join('') + '</datalist>';
 }
 
 function typeAhead(search) {
     if (!search) return;
 
-    var searchInput = search.querySelector('input[name="gyms__search"]');
-    var searchResults = search.querySelector('.gyms__search__results');
+    var searchInput = search.querySelector('input[name="search"]');
+    var searchResults = search.querySelector('.searchGyms2__results');
+
     // on = add event listener
     searchInput.on('input', function () {
         var _this = this;
@@ -2045,6 +2046,7 @@ function typeAhead(search) {
             searchResults.style.display = 'none';
             return;
         }
+
         searchResults.style.display = 'block';
         _axios2.default.get('/api/search?q=' + this.value).then(function (res) {
             if (res.data.length) {
@@ -2052,7 +2054,7 @@ function typeAhead(search) {
                 searchResults.innerHTML = _dompurify2.default.sanitize(html);
                 return;
             }
-            searchResults.innerHTML = _dompurify2.default.sanitize('<div class="gym__search__result">No results for ' + _this.value + ' found!</div>');
+            searchResults.innerHTML = _dompurify2.default.sanitize('<div class="search__result">No results for ' + _this.value + ' found!</div>');
         }).catch(function (err) {
             console.error(err);
         });
@@ -2075,22 +2077,14 @@ function typeAhead(search) {
             next = current.previousElementSibling || items[items.length - 1];
         } else if (e.keyCode === 38) {
             next = items[items.length - 1];
-        } else if (e.keyCode === 13) {
-            searchInput.value = current.innerHTML;
-            searchResults.style.display = 'none';
-            console.log();
-            searchResults.nextSibling.focus();
+        } else if (e.keyCode == 13) {
+            searchInput.value = current;
             return;
         }
         if (current) {
             current.classList.remove(activeClass);
         }
         next.classList.add(activeClass);
-    });
-
-    // if someone hits enter on the address field don't submit the form
-    searchInput.on('keydown', function (e) {
-        if (e.keyCode === 13) e.preventDefault();
     });
 }
 
@@ -2909,9 +2903,9 @@ var _typeAhead = __webpack_require__(14);
 
 var _typeAhead2 = _interopRequireDefault(_typeAhead);
 
-var _typeAheadProblem = __webpack_require__(15);
+var _typeAheadGyms = __webpack_require__(15);
 
-var _typeAheadProblem2 = _interopRequireDefault(_typeAheadProblem);
+var _typeAheadGyms2 = _interopRequireDefault(_typeAheadGyms);
 
 var _heart = __webpack_require__(12);
 
@@ -2927,7 +2921,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 (0, _autocomplete2.default)((0, _bling.$)('#address'), (0, _bling.$)('#lat'), (0, _bling.$)('#lng'));
 
 (0, _typeAhead2.default)((0, _bling.$)('.search'));
-(0, _typeAheadProblem2.default)((0, _bling.$)('.search__gyms'));
+(0, _typeAheadGyms2.default)((0, _bling.$)('.searchGyms2'));
 
 var heartForms = (0, _bling.$$)('form.heart');
 heartForms.on('submit', _heart2.default);

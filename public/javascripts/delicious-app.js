@@ -3,7 +3,7 @@ import '../sass/style.scss';
 import { $, $$ } from './modules/bling';
 import autocomplete from './modules/autocomplete';
 import typeAhead from './modules/typeAhead';
-import typeAheadProblem from './modules/typeAheadProblem';
+import typeAheadGyms from './modules/typeAheadGyms';
 import ajaxHeart from './modules/heart';
 import makeMap from './modules/map'
 
@@ -11,7 +11,7 @@ import makeMap from './modules/map'
 autocomplete($('#address'), $('#lat'), $('#lng'));
 
 typeAhead( $('.search'));
-typeAheadProblem( $('.search__gyms'));
+typeAheadGyms( $('.searchGyms2'));
 
 const heartForms = $$('form.heart');
 heartForms.on('submit', ajaxHeart);

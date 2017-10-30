@@ -17,14 +17,15 @@ function typeAhead(search) {
     const searchInput = search.querySelector('input[name="search"]');
     const searchResults = search.querySelector('.search__results');
 
+
     // on = add event listener
     searchInput.on('input', function () {
         if (!this.value) {
             searchResults.style.display = 'none';
             return;
         }
+        
         searchResults.style.display = 'block';
-
         axios
             .get(`/api/search?q=${this.value}`)
             .then(res => {

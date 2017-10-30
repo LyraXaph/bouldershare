@@ -13,6 +13,8 @@ block content
     .single__details.inner
         p=problem.description
         
+        p Grade: #{problem.grade}
+        
         if user
             +reviewForm(problem)
 
