@@ -7,7 +7,7 @@ const reviewController = require('../controllers/reviewController');
 const problemController = require('../controllers/problemController');
 const { catchErrors } = require('../handlers/errorHandlers');
 
-router.get('/', gymController.getGyms);
+router.get('/', problemController.getProblems);
 router.get('/gyms', catchErrors(gymController.getGyms));
 router.get('/hearts', authController.isLoggedIn, catchErrors(gymController.getHeartedGyms));
 router.get('/add', authController.isLoggedIn, gymController.addGym);

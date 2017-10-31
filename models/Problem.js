@@ -48,7 +48,7 @@ problemSchema.pre('save', async function(next){
     next();
 });
 
- // find reviews where the stores.id property === reviews problem property
+ // find reviews where the problem.id property === reviews problem property
  problemSchema.virtual('reviews', {
     ref: 'Review', 
     localField: '_id', // which field on the problem model

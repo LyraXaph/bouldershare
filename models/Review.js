@@ -25,6 +25,10 @@ const reviewSchema = new Schema({
         type: mongoose.Schema.ObjectId,
         ref: 'Gym', 
         required: 'You must supply a gym!'
+    },
+    problem: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Problem'
     }
 });
 
