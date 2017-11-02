@@ -12,6 +12,8 @@ const expressValidator = require('express-validator');
 const routes = require('./routes/index');
 const helpers = require('./helpers');
 const errorHandlers = require('./handlers/errorHandlers');
+const cors = require('cors');
+const morgan = require('morgan');
 require('./handlers/passport');
 
 
@@ -28,7 +30,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Takes the raw requests and turns them into usable properties on req.body
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
+// cors allows any client to access the backend
+app.use(cors());
 // Exposes a bunch of methods for validating data. Used heavily on userController.validateRegister
 app.use(expressValidator());
 
@@ -84,6 +87,9 @@ if (app.get('env') === 'development') {
 
 // production error handler
 app.use(errorHandlers.productionErrors);
+
+app.use(morgan('combined'));
+
 
 // done! we export it so we can start the site in start.js
 module.exports = app;
