@@ -3,35 +3,24 @@
     <v-flex xs6 offset-xs3>
       <div class="white elevation-2">
         <v-toolbar flat dense class="cyan" dark>
-          <v-toolbar-title>Register</v-toolbar-title>
+          <v-toolbar-title>Log in</v-toolbar-title>
         </v-toolbar>
             <div>
               <div class="pl-4 pr-4 pt-2 pb-2">
-                 <v-text-field
-                  label="Name"
-                  v-model="name"
-                ></v-text-field>
                 <v-text-field
-                  label="E-mail"
+                  label="Email"
                   v-model="email"
                 ></v-text-field>
                 <v-text-field
                   label="Password"
+                  type="password"
                   v-model="password"
-                  type="password"
                 ></v-text-field>
-                <v-text-field
-                  label="Confirm password"
-                  type="password"
-                  v-model="confirmPassword"
-                ></v-text-field>
-                <br>
                 <div v-html="error" class="error" /></div>
                 <div v-html="message"></div>
-                <br>
-                  <v-btn class="cyan" dark
-                    @click="register"
-                    >Register</v-btn>                    
+                <v-btn class="cyan" dark
+                @click="login"
+                >Log in </v-btn>                    
               </div>
       </div>
     </v-flex>
@@ -43,29 +32,26 @@ import AuthenticationService from '@/services/AuthenticationService'
 export default {
   data () {
     return {
-      name: '',
       email: '',
       password: '',
-      confirmPassword: '',
       error: null,
       message: null
     }
   },
   methods: {
-    async register () {
+    async login () {
       try {
-        const response = await AuthenticationService.register({
-          name: this.name,
+        const response = await AuthenticationService.login({
           email: this.email,
-          password: this.password,
-          confirmPassword: this.confirmPassword
+          password: this.password
         })
         this.$store.dispatch('setToken', response.data.token)
         this.$store.dispatch('setUser', response.data.user)
         this.message = response.data.message
+        console.log(response.data.user)
+        console.log(response.data.token)
       } catch (error) {
-        console.log(error.response.data)
-        this.error = error.response.data.map(elem => elem.msg).join('<br>')
+        this.error = error.response.data.message
       }
     }
   }

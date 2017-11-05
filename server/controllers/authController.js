@@ -4,6 +4,18 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const promisify = require('es6-promisify');
 const mail = require('../handlers/mail');
+const jwt = require('jsonwebtoken');
+
+function jwtSignUser(user){
+    const ONE_WEEK = 60 * 60 * 24 * 7;
+    try {
+    return jwt.sign(user, process.env.JWT_SECRET, 
+                    {expiresIn: ONE_WEEK})
+        }
+    catch(err){
+        return(err)
+    }
+}
 
 exports.login = passport.authenticate('local', { 
     failureRedirect: '/login', 
@@ -11,6 +23,19 @@ exports.login = passport.authenticate('local', {
     successRedirect: '/', 
     sucessFlash: 'Login success!'
 });
+
+exports.login = (req, res) => {
+    passport.authenticate('local', function(err, user, info) {
+        if (err) { return res.status(500).send({message: err}); }
+        if (!user) { return res.status(403).send({message: 'The login information was incorrect'}); }
+        req.logIn(user, function(err) {
+          if (err) { return res.status(500).send({message: err}); }
+          return res.send({message: `Login successful for ${user.name}`,
+                           user: user.toJSON(), 
+                           token: jwtSignUser(user.toJSON())});
+        });
+      })(req, res);
+};
 
 exports.logout = (req, res) => {
     req.logout();

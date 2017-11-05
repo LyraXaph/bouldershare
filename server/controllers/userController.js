@@ -11,7 +11,6 @@ exports.registerForm = (req, res) => {
 };
 
 exports.validateRegister = (req, res, next) => {
-    console.log(req.body)
     //req.sanitizeBody('name');
 
     req.checkBody('name', 'You must supply a name!').notEmpty();
@@ -29,8 +28,7 @@ exports.validateRegister = (req, res, next) => {
     if (errors) {
         //req.flash('error', errors.map(err => err.msg));
         // res.render('register', {title: 'Register', body: req.body, flashes: req.flash() });
-        console.log(errors);
-        res.return(errors);
+        res.status(400).send(errors);
         //return; // stops the fn from running
     }
     next(); // there were no errors 
@@ -44,10 +42,13 @@ exports.register = async (req, res, next) => {
         await register(user, req.body.password);
     }
     catch (err) {
-        console.log(err)
-        res.return(err);
+        res.status(400).send(err);
     }
-    next();
+    res.send({
+        message: `Hello ${req.body.name}. Your user was registered.`, 
+        user: user.toJSON()
+    })
+    //next();
 };
 
 exports.account = (req, res) => {
