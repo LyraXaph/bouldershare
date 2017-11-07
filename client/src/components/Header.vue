@@ -7,22 +7,20 @@
             </v-btn>
         </v-toolbar-title>
         <v-toolbar-items>
-            <v-btn flat datk>
+            <v-btn flat dark to="/routes">
                 Browse
             </v-btn>
         </v-toolbar-items>
         <v-spacer></v-spacer>
         <v-toolbar-items>
-            <router-link to="register" class="btn cyan">
-            <v-btn flat dark v-if="!$store.state.isUserLoggedIn"
+            <v-btn flat dark v-if="$store.state.isUserLoggedIn" to="/login"> Log out
+            </v-btn>
+            <v-btn flat dark v-if="!$store.state.isUserLoggedIn" to="/register"
             > Sign up
             </v-btn>
-             </router-link>
-            <router-link to="login" class="btn cyan">
-            <v-btn flat dark v-if="!$store.state.isUserLoggedIn"
+            <v-btn flat dark v-if="!$store.state.isUserLoggedIn" to="/login"
             > Log in
             </v-btn>
-             </router-link>
         </v-toolbar-items>
     </v-toolbar>
 </template>
@@ -32,6 +30,13 @@ export default {
   methods: {
     navigateTo (route) {
       this.$router.push(route)
+    },
+    logout () {
+      this.$store.dispatch('setToken', null)
+      this.$store.dispatch('setUser', null)
+      this.$router.push({
+        name: 'root'
+      })
     }
   }
 }

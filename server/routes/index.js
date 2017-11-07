@@ -23,7 +23,7 @@ router.get('/gyms/:id/edit', catchErrors(gymController.editGym));
 router.get('/gym/:slug', catchErrors(gymController.getGymBySlug));
 
 router.get('/problemAdd', authController.isLoggedIn, catchErrors(problemController.addProblem));
-router.post('/problemAdd',
+router.post('/problems',
     problemController.upload,
     catchErrors(problemController.resize), 
     catchErrors(problemController.createProblem));

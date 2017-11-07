@@ -51,7 +51,8 @@ exports.createProblem = async (req, res) => {
 exports.getProblems = async (req, res) => {
     //1. query the database for the list of all stores
     const problems = await Problem.find();
-    res.render('problems', {title: "Problems", problems});
+    //res.render('problems', {title: "Problems", problems});
+    res.send(problems)
 };
 
 exports.getProblemBySlug = async (req, res, next) => {

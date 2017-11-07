@@ -1,45 +1,43 @@
 <template>
   <v-layout column>
     <v-flex xs6 offset-xs3>
-      <div class="white elevation-2">
-        <v-toolbar flat dense class="cyan" dark>
-          <v-toolbar-title>Register</v-toolbar-title>
-        </v-toolbar>
-            <div>
-              <div class="pl-4 pr-4 pt-2 pb-2">
-                 <v-text-field
-                  label="Name"
-                  v-model="name"
-                ></v-text-field>
-                <v-text-field
-                  label="E-mail"
-                  v-model="email"
-                ></v-text-field>
-                <v-text-field
-                  label="Password"
-                  v-model="password"
-                  type="password"
-                ></v-text-field>
-                <v-text-field
-                  label="Confirm password"
-                  type="password"
-                  v-model="confirmPassword"
-                ></v-text-field>
-                <br>
-                <div v-html="error" class="error" /></div>
-                <div v-html="message"></div>
-                <br>
-                  <v-btn class="cyan" dark
-                    @click="register"
-                    >Register</v-btn>                    
-              </div>
-      </div>
+       <panel title="Register">
+          <div class="pl-4 pr-4 pt-2 pb-2">
+             <v-text-field
+             label="Name"
+             v-model="name"
+             ></v-text-field>
+             <v-text-field
+             label="E-mail"
+             v-model="email"
+             ></v-text-field>
+             <v-text-field
+              label="Password"
+              v-model="password"
+              type="password"
+             ></v-text-field>
+             <v-text-field
+              label="Confirm password"
+              type="password"
+              v-model="confirmPassword"
+             ></v-text-field>
+             <br>
+             <div v-html="error" class="error">
+             </div>
+             <div v-html="message"></div>
+             <br>
+             <v-btn class="cyan" dark
+              @click="register"
+              >Register</v-btn>  
+            </div>
+       </panel>                 
     </v-flex>
    </v-layout>
 </template>
 
 <script>
 import AuthenticationService from '@/services/AuthenticationService'
+import Panel from '@/components/Panel'
 export default {
   data () {
     return {
@@ -68,10 +66,14 @@ export default {
         this.error = error.response.data.map(elem => elem.msg).join('<br>')
       }
     }
+  },
+  components: {
+    Panel
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
 </style>
