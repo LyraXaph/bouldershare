@@ -49,9 +49,28 @@ exports.createProblem = async (req, res) => {
 };
 
 exports.getProblems = async (req, res) => {
+    let problems = null
+    if (req.query.search) {
+        console.log(req.query.search)
+        problems = await Problem.
+            // first find Problems that match
+            find({
+                $text: {
+                    $search: req.query.search,
+                }
+            }, {
+                score: { $meta: 'textScore' }
+            })
+            // then sort them 
+            .sort({
+                score: { $meta: 'textScore' }
+            })
+            // limit to only 5 results
+            .limit(5);  
+    } else {
     //1. query the database for the list of all stores
-    const problems = await Problem.find();
-    //res.render('problems', {title: "Problems", problems});
+    problems = await Problem.find();
+    }
     res.send(problems)
 };
 

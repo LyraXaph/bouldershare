@@ -37,7 +37,6 @@
 
 <script>
 import AuthenticationService from '@/services/AuthenticationService'
-import Panel from '@/components/Panel'
 export default {
   data () {
     return {
@@ -66,9 +65,6 @@ export default {
         this.error = error.response.data.map(elem => elem.msg).join('<br>')
       }
     }
-  },
-  components: {
-    Panel
   }
 }
 </script>

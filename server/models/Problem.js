@@ -34,6 +34,14 @@ const problemSchema = new Schema({
     
 });
 
+//define indexes (index something as text)
+problemSchema.index({
+    name: 'text',
+    description: 'text',
+    grade: 'text'
+});
+
+
 problemSchema.pre('save', async function(next){
     if(!this.isModified('name')){
         next(); // skip it

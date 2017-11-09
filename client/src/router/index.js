@@ -3,8 +3,9 @@ import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import Register from '@/components/Register'
 import Login from '@/components/Login'
-import Routes from '@/components/Routes'
+import Routes from '@/components/Routes/Index'
 import CreateRoute from '@/components/CreateRoute'
+import ViewProblem from '@/components/ViewProblem'
 
 Vue.use(Router)
 
@@ -27,13 +28,18 @@ export default new Router({
     },
     {
       path: '/routes',
-      name: 'route',
+      name: 'routes',
       component: Routes
     },
     {
       path: '/routes/create',
       name: 'routes-create',
       component: CreateRoute
+    },
+    {
+      path: '/problems/:slug',
+      name: 'problem',
+      component: ViewProblem
     }
   ]
 })
