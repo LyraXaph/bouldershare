@@ -5,6 +5,7 @@ const User = mongoose.model('User');
 const promisify = require('es6-promisify');
 const mail = require('../handlers/mail');
 const jwt = require('jsonwebtoken');
+const LocalStrategy = require('passport-local').Strategy;
 
 function jwtSignUser(user){
     const ONE_WEEK = 60 * 60 * 24 * 7;
@@ -53,7 +54,8 @@ exports.isLoggedIn = (req, res, next) => {
     res.redirect('/login');
   };
 
-exports.forgot = async (req, res) => {
+
+  exports.forgot = async (req, res) => {
     // see if a user with that email exists
     const user = await User.findOne( { email: req.body.email});
     if (!user) {
@@ -124,3 +126,20 @@ exports.update = async (req, res) => {
     req.flash('success', '🤸 Nice! Your password has been reset. You are now logged in!');
     res.redirect('/');
 };
+
+exports.authenticate = async (req, res) => {
+    passport.authenticate('local', function(err, user, info) {
+        if (err) { return res.status(500).send({message: err}); }
+        if (!user) { return res.status(403).send({message: 'The login information was incorrect'}); }
+        req.logIn(user, function(err) {
+          if (err) { return res.status(500).send({message: err}); }
+          return res.send({message: `Login successful for ${user.name}`,
+                         //  user: user.toJSON(), 
+                           token: jwtSignUser({
+                                email: user.email, 
+                                id: user._id
+                                })
+                        });
+        });
+      })(req, res);
+}

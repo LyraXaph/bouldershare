@@ -70,3 +70,8 @@ exports.updateAccount = async (req, res) => {
     res.redirect('back'); //back to the one they came from 
 }
 
+exports.getUsers = async (req, res) => {
+    const users = await User.find();
+    res.json(users);
+}
+

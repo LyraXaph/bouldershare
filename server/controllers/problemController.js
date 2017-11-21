@@ -51,13 +51,11 @@ exports.createProblem = async (req, res) => {
 exports.getProblems = async (req, res) => {
     let problems = null
     if (req.query.search) {
-        console.log(req.query.search)
+        let regex = new RegExp('.*' + req.query.search + '.*', 'gi');        
         problems = await Problem.
             // first find Problems that match
             find({
-                $text: {
-                    $search: req.query.search,
-                }
+                "name": regex
             }, {
                 score: { $meta: 'textScore' }
             })

@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const passport = require('passport');
 const gymController = require('../controllers/gymController');
 const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
@@ -63,5 +64,6 @@ router.get('/api/search', catchErrors(gymController.searchGyms));
 
 router.post('/api/gyms/:id/heart', catchErrors(gymController.heartGym));
 router.get('/api/gyms/near', catchErrors(gymController.mapGyms));
+
 module.exports = router;
 
