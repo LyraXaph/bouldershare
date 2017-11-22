@@ -3,7 +3,13 @@ const apiRoutes = express.Router();
 const passport = require('passport');
 const authController = require('../controllers/authController');
 const userController = require('../controllers/userController');
+const problemController = require('../controllers/problemController');
 const jwt    = require('jsonwebtoken');
+const { catchErrors } = require('../handlers/errorHandlers');
+
+apiRoutes.post('/register', userController.validateRegister,
+                            userController.register, 
+                            authController.login);
 
 apiRoutes.post('/authenticate', authController.authenticate);
 
@@ -39,14 +45,13 @@ apiRoutes.use(function(req, res, next) {
     
 // route to show a random message (GET http://localhost:8080/api/)
 apiRoutes.get('/', function(req, res) {
-    res.json({ message: 'Welcome to the coolest API on earth!' });
+    res.json({ message: 'Welcome to the coolest API on earth!', userId : req.user._id });
 });
 
-// Protect dashboard route with JWT
-apiRoutes.get('/dashboard', passport.authenticate('jwt', { session: false }), function(req, res) {
-    res.send('It worked! User id is: ' + req.user._id + '.');
-  });
-
 apiRoutes.get('/users', userController.getUsers);
+
+apiRoutes.post('/problems', problemController.upload,
+    (problemController.resize),  
+    (problemController.createProblem));
   
 module.exports = apiRoutes;

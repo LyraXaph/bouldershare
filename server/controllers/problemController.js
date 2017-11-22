@@ -24,6 +24,7 @@ exports.upload = multer(multerOptions).single('photo');
 exports.resize = async (req, res, next) => {
     // check if there is no new file to resize
     if (!req.file){
+        console.log('bla');
         next(); // skip to the next middleware
         return;
     } 
@@ -42,10 +43,17 @@ exports.addProblem = async (req, res) => {
 };
 
 exports.createProblem = async (req, res) => {
+    console.log('i am creating a problem!');
     req.body.author = req.user._id;
-    const problem = await (new Problem(req.body)).save();
-    req.flash('success', `Successfully Created ${problem.name}. Care to leave a review?`);
-    res.redirect(`/problem/${problem.slug}`);
+    try{
+        const problem = await (new Problem(req.body)).save();
+    }
+    catch (err) {
+        console.log(err);
+    }
+   // req.flash('success', `Successfully Created ${problem.name}. Care to leave a review?`);
+   // res.redirect(`/problem/${problem.slug}`);
+   res.json({success: true, message: "Problem successfully added!"});
 };
 
 exports.getProblems = async (req, res) => {

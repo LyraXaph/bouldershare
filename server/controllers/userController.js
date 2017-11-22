@@ -44,11 +44,11 @@ exports.register = async (req, res, next) => {
     catch (err) {
         res.status(400).send(err);
     }
-    res.send({
+    /* res.send({
         message: `Hello ${req.body.name}. Your user was registered.`, 
         user: user.toJSON()
-    })
-    //next();
+    }) */
+    next();
 };
 
 exports.account = (req, res) => {

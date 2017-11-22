@@ -32,8 +32,15 @@ exports.login = (req, res) => {
         req.logIn(user, function(err) {
           if (err) { return res.status(500).send({message: err}); }
           return res.send({message: `Login successful for ${user.name}`,
-                           user: user.toJSON(), 
-                           token: jwtSignUser(user.toJSON())});
+                           user: {
+                               email: user.email, 
+                               id: user._id
+                            }, 
+                           token: jwtSignUser({
+                            email: user.email, 
+                            id: user._id
+                            })
+                        });
         });
       })(req, res);
 };
