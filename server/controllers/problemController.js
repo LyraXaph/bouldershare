@@ -47,13 +47,15 @@ exports.createProblem = async (req, res) => {
     req.body.author = req.user._id;
     try{
         const problem = await (new Problem(req.body)).save();
+        res.json({success: true, message: "Problem successfully added!"});
     }
     catch (err) {
         console.log(err);
+        res.json({success: false, message: err});
     }
    // req.flash('success', `Successfully Created ${problem.name}. Care to leave a review?`);
    // res.redirect(`/problem/${problem.slug}`);
-   res.json({success: true, message: "Problem successfully added!"});
+  
 };
 
 exports.getProblems = async (req, res) => {
