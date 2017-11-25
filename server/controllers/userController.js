@@ -29,25 +29,22 @@ exports.validateRegister = (req, res, next) => {
         //req.flash('error', errors.map(err => err.msg));
         // res.render('register', {title: 'Register', body: req.body, flashes: req.flash() });
         res.status(400).send(errors);
-        //return; // stops the fn from running
+        return; // stops the fn from running
+    } else {
+        next(); // there were no errors 
     }
-    next(); // there were no errors 
 };
 
 exports.register = async (req, res, next) => {
-    console.log(req.body.email);
     const user = new User({ email: req.body.email, name: req.body.name });
     const register = promisify(User.register, User);
     try {
-        await register(user, req.body.password);
+        const registered = await register(user, req.body.password);
     }
     catch (err) {
-        res.status(400).send(err);
-    }
-    /* res.send({
-        message: `Hello ${req.body.name}. Your user was registered.`, 
-        user: user.toJSON()
-    }) */
+        res.send(err);
+        return;
+    } 
     next();
 };
 

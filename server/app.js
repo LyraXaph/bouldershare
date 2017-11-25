@@ -16,7 +16,7 @@ const errorHandlers = require('./handlers/errorHandlers');
 const cors = require('cors');
 const morgan = require('morgan');
 require('./handlers/passport');
-
+require('now-logs')('supersecretthisis'); 
 
 // create our Express app
 const app = express();

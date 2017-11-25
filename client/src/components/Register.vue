@@ -63,6 +63,7 @@ export default {
       } catch (error) {
         console.log(error.response.data)
         this.error = error.response.data.map(elem => elem.msg).join('<br>')
+        // this.error = error.response.data
       }
     }
   }

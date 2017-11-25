@@ -18,12 +18,12 @@ function jwtSignUser(user){
     }
 }
 
-exports.login = passport.authenticate('local', { 
+/* exports.login = passport.authenticate('local', { 
     failureRedirect: '/login', 
     failureFlash: 'Failed login!', 
     successRedirect: '/', 
     sucessFlash: 'Login success!'
-});
+}); */
 
 exports.login = (req, res) => {
     passport.authenticate('local', function(err, user, info) {
