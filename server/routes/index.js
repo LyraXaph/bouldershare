@@ -34,9 +34,12 @@ router.post('/problemAdd/:id',
     catchErrors(problemController.updatProblem));
 router.get('/problem/:slug', catchErrors(problemController.getProblemBySlug));
 router.get('/problems', catchErrors(problemController.getProblems));
+router.put('/problems/:id', catchErrors(problemController.updateProblem));
+
 
 router.get('/login', userController.loginForm);
 router.post('/login', authController.login);
+
 router.get('/register', userController.registerForm);
 router.post('/register', userController.validateRegister,
                          userController.register, 

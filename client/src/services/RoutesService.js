@@ -6,7 +6,13 @@ export default {
       params: { search }
     })
   },
+  show (problemSlug) {
+    return Api().get(`problem/${problemSlug}`)
+  },
   post (route) {
     return Api().post('problems', route)
+  },
+  put (route) {
+    return Api().put(`problems/${route._id}`, route)
   }
 }

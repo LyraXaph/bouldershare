@@ -24,7 +24,6 @@ exports.upload = multer(multerOptions).single('photo');
 exports.resize = async (req, res, next) => {
     // check if there is no new file to resize
     if (!req.file){
-        console.log('bla');
         next(); // skip to the next middleware
         return;
     } 
@@ -79,14 +78,15 @@ exports.getProblems = async (req, res) => {
     //1. query the database for the list of all stores
     problems = await Problem.find();
     }
-    res.send(problems)
+    res.send(problems);
 };
 
 exports.getProblemBySlug = async (req, res, next) => {
     // populate the object from the object id (author)
     const problem = await Problem.findOne({slug : req.params.slug}).populate('author reviews');
     if (!Problem) return next();
-    res.render('problem', {title: problem.name, problem});
+    //res.render('problem', {title: problem.name, problem});
+    res.send(problem);
 }
 
 exports.getHeartedProblems = async (req, res, next) => {
@@ -109,14 +109,19 @@ exports.editProblem = async (req, res) => {
 }
 
 exports.updateProblem = async (req, res) => {
-    const Problem = await Problem.findOneAndUpdate(
-        {_id: req.params.id},
-        req.body,
-        {new: true, // return the updated Problem instead of the old one
-        runValidators: true}
-    ).exec();
-    req.flash('success', `Successfully updated ${Problem.name}`);
-    res.redirect(`/problems/${Problem._id}/edit`);
+    try {
+        const problem = await Problem.findOneAndUpdate(
+            {_id: req.params.id},
+            req.body,
+            {new: true, // return the updated Problem instead of the old one
+            runValidators: true}
+        ).exec();
+        res.send(problem);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+/*     req.flash('success', `Successfully updated ${Problem.name}`);
+    res.redirect(`/problems/${Problem._id}/edit`); */
 }
 
 exports.searchProblems = async (req,  res) => {

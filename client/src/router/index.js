@@ -5,7 +5,8 @@ import Register from '@/components/Register'
 import Login from '@/components/Login'
 import Routes from '@/components/Routes/Index'
 import CreateRoute from '@/components/CreateRoute'
-import ViewProblem from '@/components/ViewProblem'
+import ViewRoute from '@/components/ViewRoute'
+import EditRoute from '@/components/EditRoute'
 
 Vue.use(Router)
 
@@ -39,7 +40,12 @@ export default new Router({
     {
       path: '/problems/:slug',
       name: 'problem',
-      component: ViewProblem
+      component: ViewRoute
+    },
+    {
+      path: '/problem/:slug/edit',
+      name: 'problem-edit',
+      component: EditRoute
     }
   ]
 })

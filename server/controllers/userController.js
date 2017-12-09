@@ -41,8 +41,8 @@ exports.register = async (req, res, next) => {
     try {
         const registered = await register(user, req.body.password);
     }
-    catch (err) {
-        res.send(err);
+    catch (error) {
+        res.send(error);
         return;
     } 
     next();

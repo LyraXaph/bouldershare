@@ -4,6 +4,7 @@ const User = mongoose.model('User');
 
 passport.use(User.createStrategy());
 
+// this puts the user object on the request when they log in
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 

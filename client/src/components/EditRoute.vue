@@ -2,12 +2,11 @@
     <v-layout>
         <v-flex xs4>
             <panel title="Route Metadata">
-                <v-text-field
-                label="Name"
-                required 
-                :rules="[required]"
-                v-model="route.name"
-                ></v-text-field>
+                <div class="form-group" :class="{'has-error': errors.has('route.name') }">
+                  <v-text-field label="Name" v-model="route.name" data-rules="required|route.name"
+                  v-validate="route.name"></v-text-field>
+                  <p class="text-danger" v-if="errors.has('route.name')">{{ errors.first('route.name') }}</p>
+                </div>
                 <v-text-field
                 label="Grade"
                 required 
@@ -34,8 +33,8 @@
             </panel> 
             <div class="error-alert mt-2" v-if="error">{{error}}</div>   
               <v-btn class="cyan" dark
-                @click="create"
-                >Create</v-btn>  
+                @click="save"
+                >Save</v-btn>  
          </v-flex>
     </v-layout>
 </template>
@@ -56,21 +55,30 @@ export default {
     }
   },
   methods: {
-    async create () {
+    async save () {
       this.error = null
       const areAllFieldsFilled = Object
-        .keys(this.route)
-        .every(key => !!this.route[key])
+      .keys(this.route)
+      .every(key => !!this.route[key])
       if (!areAllFieldsFilled) {
-        this.error = 'Please fill in all the required fields'
+        this.error = 'Please fill in all the required fields.'
         return
       }
       try {
-        await RoutesService.post(this.route)
-        this.$router.push()
+        await RoutesService.put(this.route)
+        this.$router.go(-1)
       } catch (err) {
         console.log(err)
       }
+    }
+  },
+  async mounted () {
+    try {
+      const problemSlug = this.$store.state.route.params.slug
+      this.route = (await RoutesService.show(problemSlug)).data
+      // TODO get gym name this.route.gym = (await )
+    } catch (err) {
+      console.log(err)
     }
   }
 }

@@ -13,7 +13,7 @@
         </v-toolbar-items>
         <v-spacer></v-spacer>
         <v-toolbar-items>
-            <v-btn flat dark v-if="$store.state.isUserLoggedIn" to="/login"> Log out
+            <v-btn flat dark v-if="$store.state.isUserLoggedIn" @click="logout"> Log out
             </v-btn>
             <v-btn flat dark v-if="!$store.state.isUserLoggedIn" to="/register"
             > Sign up
