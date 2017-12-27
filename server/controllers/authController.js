@@ -10,9 +10,9 @@ const LocalStrategy = require('passport-local').Strategy;
 function jwtSignUser(user){
     const ONE_WEEK = 60 * 60 * 24 * 7;
     try {
-    return jwt.sign(user, process.env.JWT_SECRET, 
-                    {expiresIn: ONE_WEEK})
-        }
+        return jwt.sign(user, process.env.JWT_SECRET, 
+                        {expiresIn: ONE_WEEK})
+            }
     catch(err){
         return(err)
     }
@@ -61,8 +61,7 @@ exports.isLoggedIn = (req, res, next) => {
     res.redirect('/login');
   };
 
-
-  exports.forgot = async (req, res) => {
+exports.forgot = async (req, res) => {
     // see if a user with that email exists
     const user = await User.findOne( { email: req.body.email});
     if (!user) {

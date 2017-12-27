@@ -52,6 +52,16 @@ exports.account = (req, res) => {
     res.render('account', { title: 'Edit your account' });
 }
 
+exports.deleteUser = async(req, res) => {
+    try{
+       await User.findOneAndRemove({_id: req.params.id});
+    } catch(err) {
+        console.log(err);
+        res.send(err);
+    }
+    res.send('success!');
+}
+
 exports.updateAccount = async (req, res) => {
     const updates = {
         name: req.body.name,

@@ -20,6 +20,8 @@
                                 slug: problem.slug
                             }
                         }">Edit</v-btn>
+                        <v-btn dark class="cyan"
+                            @click="deleteProblem(problem._id)">Delete</v-btn>
                     </v-card-actions>
                 </v-card>
             </panel>
@@ -40,6 +42,16 @@ export default {
   async mounted () {
     const problemSlug = this.$store.state.route.params.slug
     this.problem = (await RoutesService.show(problemSlug)).data
+  },
+  methods: {
+    deleteProblem (problemId) {
+      try {
+        RoutesService.delete(problemId, this.$store.state.token)
+        this.$router.push('/routes')
+      } catch (err) {
+        console.log(err)
+      }
+    }
   }
 }
 </script>

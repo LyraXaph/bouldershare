@@ -19,7 +19,6 @@ apiRoutes.use(function(req, res, next) {
       var token = req.body.token || req.query.token || req.headers['x-access-token'];
       // decode token
       if (token) {
-        
         // verifies secret and checks exp
         jwt.verify(token, process.env.JWT_SECRET, function(err, decoded) { 
           if (err) {
@@ -49,9 +48,12 @@ apiRoutes.get('/', function(req, res) {
 });
 
 apiRoutes.get('/users', userController.getUsers);
+apiRoutes.delete('/users/:id', userController.deleteUser);
 
 apiRoutes.post('/problems', problemController.upload,
     (problemController.resize),  
     (problemController.createProblem));
+
+apiRoutes.delete('/problems/:problemId', problemController.deleteProblem);
   
 module.exports = apiRoutes;

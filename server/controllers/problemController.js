@@ -42,8 +42,9 @@ exports.addProblem = async (req, res) => {
 };
 
 exports.createProblem = async (req, res) => {
-    console.log('i am creating a problem!');
-    req.body.author = req.user._id;
+    console.log(req.decoded);
+    //req.body.author = req.user._id;
+    req.body.author = req.decoded.id;
     try{
         const problem = await (new Problem(req.body)).save();
         res.json({success: true, message: "Problem successfully added!"});
@@ -122,6 +123,16 @@ exports.updateProblem = async (req, res) => {
     }
 /*     req.flash('success', `Successfully updated ${Problem.name}`);
     res.redirect(`/problems/${Problem._id}/edit`); */
+}
+
+exports.deleteProblem = async (req, res) => {
+    try{
+        await Problem.findOneAndRemove({_id: req.params.problemId});
+     } catch(err) {
+         console.log(err);
+         res.send(err);
+     }
+     res.send('success!');
 }
 
 exports.searchProblems = async (req,  res) => {

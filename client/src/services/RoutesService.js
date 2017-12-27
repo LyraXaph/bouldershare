@@ -9,10 +9,18 @@ export default {
   show (problemSlug) {
     return Api().get(`problem/${problemSlug}`)
   },
-  post (route) {
-    return Api().post('problems', route)
+  post (route, token) {
+    return Api().post(`api/problems/?token=${token}`, route)
   },
   put (route) {
     return Api().put(`problems/${route._id}`, route)
+  },
+  delete (problemId, token) {
+    return Api().delete(`api/problems/${problemId}/?token=${token}`)
+  },
+  getGyms (search, token) {
+    return Api().get(`gyms/?token=${token}`, {
+      params: { search }
+    })
   }
 }

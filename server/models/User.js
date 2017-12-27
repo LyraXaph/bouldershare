@@ -20,6 +20,12 @@ const userSchema = new Schema({
         required: 'Please supply a name', 
         trim: true
     }, 
+    gym: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'gym', 
+        dafault: '58c05fd08060197ca0b52d5a'
+        //required: 'You must supply a gym!'
+    },
     resetPasswordToken: String, 
     resetPasswordExpires: Date, 
     // hearts is an array of ids related to the gym 

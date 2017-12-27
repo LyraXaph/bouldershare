@@ -53,7 +53,8 @@ exports.createGym = async (req, res) => {
 exports.getGyms = async (req, res) => {
     //1. query the database for the list of all stores
     const gyms = await Gym.find();
-    res.render('gyms', { title: "Gyms", gyms });
+    //res.render('gyms', { title: "Gyms", gyms });
+    res.send(gyms);
 };
 
 exports.getGymBySlug = async (req, res, next) => {

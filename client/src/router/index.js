@@ -7,6 +7,7 @@ import Routes from '@/components/Routes/Index'
 import CreateRoute from '@/components/CreateRoute'
 import ViewRoute from '@/components/ViewRoute'
 import EditRoute from '@/components/EditRoute'
+import Users from '@/components/Users'
 
 Vue.use(Router)
 
@@ -46,6 +47,11 @@ export default new Router({
       path: '/problem/:slug/edit',
       name: 'problem-edit',
       component: EditRoute
+    },
+    {
+      path: '/users',
+      name: 'users',
+      component: Users
     }
   ]
 })

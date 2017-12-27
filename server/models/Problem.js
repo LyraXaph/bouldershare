@@ -29,6 +29,7 @@ const problemSchema = new Schema({
     gym: {
         type: mongoose.Schema.ObjectId,
         ref: 'gym', 
+        dafault: '58c05fd08060197ca0b52d5a'
         //required: 'You must supply a gym!'
     } 
     
